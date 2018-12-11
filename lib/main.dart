@@ -55,7 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<String> _getMessage() async {
     String value;
     try {
-      value = await platfrom.invokeMethod('getMessage');
+      var sendMap = <String, dynamic>{
+        'from': 'Aditya',
+      };
+      value = await platfrom.invokeMethod('getMessage', sendMap);
     } catch (expect) {
       print(expect);
     }

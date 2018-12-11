@@ -2,6 +2,8 @@ package com.aditya.soni.flutternativeinteractions;
 
 import android.os.Bundle;
 
+import java.util.Map;
+
 import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -19,8 +21,10 @@ public class MainActivity extends FlutterActivity {
                 new MethodChannel.MethodCallHandler() {
                     @Override
                     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
+                        final Map<String, Object> arguments = methodCall.arguments();
                         if (methodCall.method.equals("getMessage")) {
-                            String message = "Android Says Hi.";
+                            String from = (String) arguments.get("from");
+                            String message = "Android Says Hi " + from;
                             result.success(message);
                         }
                     }
