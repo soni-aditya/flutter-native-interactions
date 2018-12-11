@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,7 +23,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static const platfrom = const MethodChannel('soni.aditya.com/info');
   String _message = 'No Messages yet.';
+
+  @override
+  void initState() {
+    _getMessage().then((String newMessage) {
+      setState(() {
+        _message = newMessage;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,5 +50,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
+  }
+
+  Future<String> _getMessage() async {
+    String value;
+    try {
+      value = await platfrom.invokeMethod('getMessage');
+    } catch (expect) {
+      print(expect);
+    }
+    return value;
   }
 }
